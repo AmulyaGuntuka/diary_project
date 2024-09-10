@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Diary</title>
+    <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            background: url('img5.jpg') no-repeat center center fixed;
+            background-size: cover;
+            color: #ffffff;
+        }
+        header {
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        footer {
+            background-color: rgba(34, 20, 20, 0.374);
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        nav ul {
+            list-style-type: none;
+            padding: 0;
+            display: flex;
+            margin: 0;
+        }
+        nav ul li {
+            margin: 0 20px;
+        }
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-family: 'Lobster', cursive;
+            font-size: 20px;
+        }
+        nav ul li a:hover {
+            color: #d36a4af7;
+        }
+        .form-container, .content-container, .about-content {
+            background: rgba(34, 20, 20, 0.374);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.587);
+            width: max-content;
+            max-width: 80%;
+            text-align: center;
+            margin: 50px auto;
+            display: none;
+            font-size: 24px;
+            font-family: cursive;
+        }
+        .form-container input {
+            width: calc(100% - 22px);
+            padding: 10px;
+            margin: 10px 0;
+        }
+        .form-container button {
+            padding: 10px;
+            width: 100%;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            color: white;
+            background-color: #ffffff;
+            background-color: #741a1a89;
+        }
+        .form-container a {
+            color: #932222;
+            text-decoration: none;
+        }
+        .form-container a:hover {
+            text-decoration: underline;
+        }
+        #logo-container {
+            display: flex;
+            align-items: center;
+        }
+        .logo {
+            width: 100px;
+            height: auto;
+            margin-right: 20px;
+        }
+        footer .logo {
+            margin-right: 0;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div id="logo-container">
+            <img src="diarylogo.png" alt="Logo" class="logo">
+            <h2>Welcome</h2>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#" id="home-link">Home</a></li>
+                <li><a href="#" id="login-link">Login</a></li>
+                <li><a href="#" id="register-link">Register</a></li>
+                <li><a href="#" id="about-link">About</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section id="home" class="content-container home">
+            <h1>Welcome to your diary</h1>
+            <p>This is the user-interface for your diary. On the Account page, you can change the information about your diary, such as email address, diary name, username, and password. Use the links on the top of the page to navigate.</p>
+            <p>Under Account, you can have information about yourself. If your diary is public, others can see the description you put there.</p>
+            <p>To make a new entry in your diary, choose 'Write new entry'. To read your previous entries, choose 'My entries'.</p>
+            <p>Your diary is private. Others will not see what you write.</p>
+        </section>
+
+        <section id="login" class="form-container">
+            <form onsubmit="validateForm(event)">
+                <h2>Login</h2>
+                <input type="email" placeholder="Email" id="login-email" required>
+                <input type="password" placeholder="Password" id="login-password" required>
+                <button type="submit">Login</button>
+                <p id="login-error-message" class="error"></p>
+                <p><a href="#" id="forgot-password-link" onclick="showSection('forgot-password')">Forgot password?</a></p>
+                <p>Not registered? <a href="#" id="register-link" onclick="showSection('register')">Sign up now</a></p>
+                <p><button type="button" onclick="loginWithGoogle()">Login with Google</button></p>
+            </form>
+        </section>
+
+        <section id="register" class="form-container">
+            <form onsubmit="register(event)">
+                <h2>Register</h2>
+                <input type="text" placeholder="Full Name" id="name" required>
+                <input type="email" placeholder="Email" id="mail" required>
+                <input type="text" placeholder="Phone Number" id="phone" required>
+                <input type="password" placeholder="Password" id="pass1" required>
+                <input type="password" placeholder="Confirm Password" id="pass2" required>
+                <button type="submit">Register</button>
+                <p id="register-error-message" class="error"></p>
+                <p>Already registered? <a href="#" id="login-link" onclick="showSection('login')">Login</a></p>
+            </form>
+        </section>
+
+        <section id="about" class="about-content">
+            <h2>About</h2>
+            <p>This is a free service for anyone who wants to keep a personal online diary, and is designed to be fast and easy to use.</p>
+            <p>You won't see much complicated design and heavy graphics here. When writing or communicating through this site, please be polite and considerate. Abuse will not be tolerated.</p>
+            <p>On the Internet, information is everything. Privacy is essential. I will not rent, sell or share your email address or the information you give me with anyone.</p>
+            <p>If you decide to make your diary public, be very careful what personal information you put in it (e.g., email address, name, address). There are lots of weird people out there. Trust me.</p>
+        </section>
+
+        <section id="forgot-password" class="form-container">
+            <form onsubmit="forgotPassword(event)">
+                <h2>Forgot Password</h2>
+                <p>Enter your email address or phone number </p>
+                <input type="email" placeholder="Email" id="forgot-email">
+                <input type="text" placeholder="Phone Number" id="forgot-phone">
+                <button type="submit">Reset Password</button>
+                <p><a href="#" id="login-link" onclick="showSection('login')">Remembered your password? Log in</a></p>
+            </form>
+        </section>
+    </main>
+    <footer>
+        <img src="diarylogo.png" alt="Logo" class="logo">
+        <p>Thank you for using My Diary. We hope you have a great experience!</p>
+    </footer>
+    <script>
+        function validateForm(event) {
+            event.preventDefault();
+            const email = document.getElementById("login-email").value;
+            const password = document.getElementById("login-password").value;
+            const errorMessage = document.getElementById("login-error-message");
+
+            const users = JSON.parse(localStorage.getItem("users")) || [];
+            const user = users.find(user => user.email === email && user.password === password);
+
+            if (user) {
+                localStorage.setItem("currentUser", JSON.stringify(user));
+                window.location.href = 'Dairy.html';
+            } else {
+                errorMessage.textContent = "Invalid email or password.";
+                errorMessage.style.display = "block";
+            }
+        }
+
+        function loginWithGoogle() {
+            alert('Google login functionality goes here.');
+        }
+
+        function register(event) {
+            event.preventDefault();
+            const name = document.getElementById("name").value;
+            const email = document.getElementById("mail").value;
+            const phone = document.getElementById("phone").value;
+            const password1 = document.getElementById("pass1").value;
+            const password2 = document.getElementById("pass2").value;
+            const errorMessage = document.getElementById("register-error-message");
+
+            if (password1.length < 6) {
+                errorMessage.textContent = "Password should be more than 6 characters.";
+                errorMessage.style.display = "block";
+                return;
+            }
+
+            if (password1 !== password2) {
+                errorMessage.textContent = "Password does not match the confirmation.";
+                errorMessage.style.display = "block";
+                return;
+            }
+
+            if (!/^\d{10}$/.test(phone)) {
+                errorMessage.textContent = "Phone number should be exactly 10 digits.";
+                errorMessage.style.display = "block";
+                return;
+            }
+
+            const users = JSON.parse(localStorage.getItem("users")) || [];
+            const userExists = users.some(user => user.email === email);
+
+            if (userExists) {
+                errorMessage.textContent = "User already exists with this email.";
+                errorMessage.style.display = "block";
+                return;
+            }
+
+            users.push({ name, email, phone, password: password1 });
+            localStorage.setItem("users", JSON.stringify(users));
+            localStorage.setItem("currentUser", JSON.stringify({ name, email }));
+
+            window.location.href = 'Dairy.html';
+        }
+
+        function forgotPassword(event) {
+            event.preventDefault();
+            const email = document.getElementById("forgot-email").value;
+            const phone = document.getElementById("forgot-phone").value;
+            const users = JSON.parse(localStorage.getItem("users")) || [];
+            const user = users.find(user => user.email === email || user.phone === phone);
+
+            if (user) {
+                // Mock sending an email or SMS
+                alert(`Password reset instructions have been sent to ${email || phone}.`);
+            } else {
+                alert("No account found with this email or phone number.");
+            }
+        }
+
+        // Event listeners
+        document.getElementById('home-link').addEventListener('click', function(event) {
+            event.preventDefault();
+            showSection('home');
+        });
+
+        document.getElementById('login-link').addEventListener('click', function(event) {
+            event.preventDefault();
+            showSection('login');
+        });
+
+        document.getElementById('register-link').addEventListener('click', function(event) {
+            event.preventDefault();
+            showSection('register');
+        });
+
+        document.getElementById('about-link').addEventListener('click', function(event) {
+            event.preventDefault();
+            showSection('about');
+        });
+
+        document.getElementById('forgot-password-link').addEventListener('click', function(event) {
+            event.preventDefault();
+            showSection('forgot-password');
+        });
+
+        function showSection(sectionId) {
+            document.querySelectorAll('section').forEach(section => {
+                section.style.display = 'none';
+            });
+            document.getElementById(sectionId).style.display = 'block';
+        }
+
+        // Show the home section by default
+        showSection('home');
+    </script>
+</body>
+</html>

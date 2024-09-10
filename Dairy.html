@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Diary</title>
+    <link rel="stylesheet" href="Mycss.css">
+    <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#new-entry">New Entry</a></li>
+                <li><a href="#my-entries">My Entries</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section id="home">
+            <h1 class="title"><center>Welcome to My Diary</center></h1>
+            <h2 class="subtitle"><center>Journey Through My Mind.</center></h2>
+        </section>
+        <section id="new-entry">
+            <h1 class="section-title">New Entry</h1>
+            <label for="mood">What's your mood today?</label>
+            <select id="mood" name="mood" onchange="generateQuote()">
+                <option value="">Select Mood</option>
+                <option value="happy">Happy</option>
+                <option value="sad">Sad</option>
+                <option value="motivated">Motivated</option>
+                <option value="relaxed">Relaxed</option>
+            </select>
+            <p id="quote"></p>
+            <form onsubmit="saveEntry(event)">
+                <label for="entry-date">Date and Time:</label>
+                <input type="datetime-local" id="entry-date" name="entry-date" required>
+                
+                <label for="entry-title">Title:</label>
+                <input type="text" id="entry-title" name="entry-title" required>
+                
+                <label for="entry-content">Content:</label>
+                <textarea id="entry-content" name="entry-content" rows="10" required></textarea>
+                
+                <center><button type="submit">Save Entry</button></center>
+                <!-- Add the Clear button here -->
+                <center><button type="button" onclick="clearForm()">Clear</button></center>
+                <!-- End of Clear button -->
+            </form>
+        </section>
+        <section id="my-entries">
+            <h1 class="section-title">My Entries</h1>
+            <input type="text" id="search-bar" placeholder="Search entries" oninput="searchEntries()">
+            <div id="entries-list"></div>
+        </section>
+    </main>
+    <script src="script.js"></script>
+</body>
+</html>
